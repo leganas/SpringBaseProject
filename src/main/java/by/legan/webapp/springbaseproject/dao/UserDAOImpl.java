@@ -10,13 +10,8 @@ import java.util.List;
 @Repository
 public class UserDAOImpl implements UserDAO {
 
-
-    public JdbcTemplate jdbcTemplate;
-
     @Autowired
-    public UserDAOImpl(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+    public JdbcTemplate jdbcTemplate;
 
     public void save(User user) {
         String sql = "INSERT INTO user (name, email, age) VALUES (?, ?, ?)";

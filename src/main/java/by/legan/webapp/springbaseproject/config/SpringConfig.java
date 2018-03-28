@@ -1,9 +1,7 @@
 package by.legan.webapp.springbaseproject.config;
 
-import by.legan.webapp.springbaseproject.dao.UserDAO;
-import by.legan.webapp.springbaseproject.dao.UserDAOImpl;
-import by.legan.webapp.springbaseproject.service.USerServiceImpl;
-import by.legan.webapp.springbaseproject.service.UserService;
+import by.legan.webapp.springbaseproject.dao.DataBaseProperty;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +14,9 @@ import javax.sql.DataSource;
 @ComponentScan(basePackages = {"by.legan.webapp.springbaseproject.service", "by.legan.webapp.springbaseproject.dao"})
 public class SpringConfig {
 
+    @Autowired
+    DataBaseProperty dataBaseProperty;
+
     @Bean
     public JdbcTemplate getJdbcTemplate(){
         return new JdbcTemplate(getDataSource());
@@ -24,10 +25,10 @@ public class SpringConfig {
     @Bean
     public DataSource getDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setUrl("jdbc:mysql://localhost:3306/springtest?useSll=false");
-        dataSource.setUsername("root");
-        dataSource.setPassword("forever");
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+        dataSource.setUrl(dataBaseProperty.getUrl());
+        dataSource.setUsername(dataBaseProperty.getUser());
+        dataSource.setPassword(dataBaseProperty.getPassword());
+        dataSource.setDriverClassName(dataBaseProperty.getDriverClassName());
 
         return dataSource;
     }
